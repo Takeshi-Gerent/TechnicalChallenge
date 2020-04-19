@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  technicalchallenge.api1:
+    image: technicalchallengeapi1
+    build:
+      context: .
+      dockerfile: API1/Dockerfile
+    ports:
+      - "5001:80"
+
+  technicalchallenge.api2:
+    image: technicalchallengeapi2
+    build:
+      context: .
+      dockerfile: API2/Dockerfile
+    environment:
+      - API1_URL=technicalchallenge.api1:80
+    ports:
+      - "5002:80"

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TechnicalChallenge.API1</name>
+    </assembly>
+    <members>
+        <member name="M:TechnicalChallenge.API1.Controllers.TaxaJurosController.Get">
+            <summary>
+            Retorna o juros de 1% ou 0,01
+            </summary>
+            <returns>Taxa de juros para cálculo de juros composto</returns>
+        </member>
+    </members>
+</doc>
