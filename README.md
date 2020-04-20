@@ -1,4 +1,4 @@
-# TechnicallChallenge
+# TechnicalChallenge
 
 ## Requisitos
 * Docker
@@ -6,7 +6,7 @@
 
 ## Executar aplicação
 ```
-> git clone https://github.com/Takeshi-Gerent/TechnicallChallenge
+> git clone https://github.com/Takeshi-Gerent/TechnicalChallenge
 > cd TechnicalChallenge
 > docker-compose up
 ```
