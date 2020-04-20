@@ -17,12 +17,10 @@ namespace TechnicalChallenge.API2.Controllers
     public class CalculaJurosController : ControllerBase
     {
         private readonly IUnityContainer _container;
-        private readonly IHttpClientFactory _clientFactory;
 
-        public CalculaJurosController(IUnityContainer container, IHttpClientFactory clientFactory)
+        public CalculaJurosController(IUnityContainer container)
         {
-            this._container = container;
-            this._clientFactory = clientFactory;
+            this._container = container;            
         }
 
         /// <summary>
@@ -39,10 +37,10 @@ namespace TechnicalChallenge.API2.Controllers
             return Ok(result.ToString("0.00", new CultureInfo("pt-BR")));
         }
 
-        private async Task<decimal> GetInterestRate()
+        protected virtual async Task<decimal> GetInterestRate()
         {
             var str = string.Empty;
-            var client = _clientFactory.CreateClient("api");
+            var client = _container.Resolve<HttpClient>("api1");
             HttpResponseMessage response = await client.GetAsync("taxajuros");
             if (response.IsSuccessStatusCode)
             {

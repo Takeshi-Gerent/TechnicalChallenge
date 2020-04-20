@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using TechnicalChallenge.API2.Config;
 using Unity;
 using Unity.Microsoft.DependencyInjection;
 
@@ -15,13 +16,12 @@ namespace TechnicalChallenge.API2
     {
         public static void Main(string[] args)
         {
-            var container = new UnityContainer();
-            CreateHostBuilder(args, container).Build().Run();
+            CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args, IUnityContainer container) =>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseUnityServiceProvider(container)
+                .UseUnityServiceProvider(UnityConfig.GetConfiguredContainer())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

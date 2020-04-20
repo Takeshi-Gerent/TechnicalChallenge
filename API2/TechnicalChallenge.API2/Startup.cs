@@ -17,6 +17,9 @@ using System.IO;
 using TechnicalChallenge.Framework.Factories;
 using TechnicalChallenge.API2.Core.Services;
 using TechnicalChallenge.API2.Service;
+using System.Reflection;
+using System.Net.Http;
+using Unity.Injection;
 
 namespace TechnicalChallenge.API2
 {
@@ -29,19 +32,9 @@ namespace TechnicalChallenge.API2
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureContainer(IUnityContainer container)
-        {
-            var serviceFactory = new ServiceFactory(container);
-            container.RegisterInstance<IServiceFactory>(serviceFactory);
-
-            container.RegisterType<ICalculaJurosService, CalculaJurosService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IShowMeTheCodeService, ShowMeTheCodeService>(new ContainerControlledLifetimeManager());
-        }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var url = string.Format("http://{0}", Environment.GetEnvironmentVariable("API1_URL"));//Configuration["Api:UrlApi1"];
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -53,17 +46,11 @@ namespace TechnicalChallenge.API2
                         Version = "1.0",
                         Contact = new OpenApiContact { Name = "Marcelo Takeshi Inoue Gerent", Email = "marcelo.t.gerent@gmail.com" }
                     });
-                var appPath = PlatformServices.Default.Application.ApplicationBasePath;
-                string appName = PlatformServices.Default.Application.ApplicationName;
-                string xmlDocPath = Path.Combine(appPath, $"{appName}.xml");
-
-                c.IncludeXmlComments(xmlDocPath);
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddHttpClient("api", config =>
-            {
-                config.BaseAddress = new Uri(url);
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -14,14 +14,13 @@ namespace TechnicalChallenge.API1
     public class Program
     {
         public static void Main(string[] args)
-        {
-            var container = new UnityContainer();
-            CreateHostBuilder(args, container).Build().Run();
+        {     
+            CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args, IUnityContainer container) =>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseUnityServiceProvider(container)
+                .UseUnityServiceProvider()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

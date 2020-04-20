@@ -17,6 +17,7 @@ using Unity.Lifetime;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.PlatformAbstractions;
 using System.IO;
+using System.Reflection;
 
 namespace TechnicalChallenge.API1
 {
@@ -52,11 +53,10 @@ namespace TechnicalChallenge.API1
                         Version = "1.0",
                         Contact = new OpenApiContact { Name = "Marcelo Takeshi Inoue Gerent", Email = "marcelo.t.gerent@gmail.com" }
                     });
-                var appPath = PlatformServices.Default.Application.ApplicationBasePath;
-                string appName = PlatformServices.Default.Application.ApplicationName;
-                string xmlDocPath = Path.Combine(appPath, $"{appName}.xml");
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
 
-                c.IncludeXmlComments(xmlDocPath);                
             });
         }
 
